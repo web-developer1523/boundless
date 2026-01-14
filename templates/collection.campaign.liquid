@@ -1,0 +1,273 @@
+{% assign campaign_handle = request.path | split: '/' | last %} 
+{% comment %} {% assign campaign = shop.metaobjects.campaign[campaign_handle] %} {% endcomment %} 
+{% assign campaign_info = collection.metafields.custom.campaign.value %}
+
+<section class="campaign-hero">
+    <div class="campaign-hero__content">
+      <h1>{{ campaign_info.name }}</h1>
+      <p class="campaign-name">{{ campaign_info.hero_copy | metafield_text }}</p> 
+    </div>
+    <div class="campaign-btns">
+      <a href="/pages/brand/{{ campaign_info.brand.value.slug }}" class="btn">About This Brand</a>
+      <a href="/pages/cause/{{ campaign_info.cause.value.slug }}" class="btn">About This Cause</a>
+    </div>
+</section>
+
+{% comment %} {{ campaign_brand_info.brand.value.default_brand_pct | json}} {% endcomment %}
+<!-- 2️⃣ Brand + Cause -->
+{% comment %} <section class="campaign-partners">
+    <div class="partner-card brand">
+        <img width="{{ campaign_info.brand.value.logo.width }}" height="{{ campaign_info.brand.value.logo.height }}" src="{{ campaign_info.brand.value.logo | image_url }}" />
+        <h2>{{campaign_info.brand.value.name}}</h2>
+        {{ campaign_info.brand.value.description | metafield_tag}} 
+        <a href="/pages/brand/{{ campaign_info.brand.value.slug }}" class="btn">View Brand</a> 
+        {% comment %} <a href="#" class="btn">View Brand</a> {% endcomment %}
+    </div>
+
+    <div class="partner-card cause">
+        <img width="{{ campaign_info.cause.value.logo.width }}" height="{{ campaign_info.cause.value.logo.height }}" src="{{ campaign_info.cause.value.logo | image_url }}" />
+        <h2>{{ campaign_info.cause.value.name }}</h2>
+        {{ campaign_info.cause.value.description | metafield_tag }} {% comment %}
+        <a href="/pages/cause/{{ campaign_info.cause.value.slug }}" class="btn">View Cause</a> {% endcomment %}
+        <a href="#" class="btn">View Cause</a>
+    </div>
+</section> {% endcomment %}
+
+<!-- 4️⃣ Products -->
+<section class="campaign-products">
+  <div class="impact-statement">{{ campaign_info.impact_statement | metafield_tag}}</div>
+    <div class="product-grid">
+        {% for product in collection.products %}
+        <div class="product-card">
+            <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
+            <a href="/products/{{ product.handle }}"><h3>{{ product.title }}</h3></a>
+            <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
+            <p>{{ product.price | money }}</p></div>
+            <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+  .price-combo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.price-combo p:first-child {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+/* Hero */
+.impact-statement {
+  text-align: center;
+  padding-bottom: 50px;
+  font-size: 18px;
+}
+.campaign-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+  url("//edh4qkdy17k9vfqs-97383514424.shopifypreview.com/cdn/shop/collections/pexels-cottonbro-10664918.jpg")
+      center / cover no-repeat;
+  padding: 50px 20px;
+  color: #fff;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.campaign-btns {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100%;
+}
+.campaign-hero__content {
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.campaign-hero h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.campaign-name {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* Brand + Cause */
+.campaign-partners {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0px auto;
+  padding: 50px 20px;
+}
+
+.partner-card {
+  background: #f8f8f8;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.partner-card img {
+  max-height: 69px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+.partner-card h2 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.partner-card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Impact */
+.campaign-impact {
+  background: #f1f4f6;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.campaign-impact p {
+  max-width: 800px;
+  margin: auto;
+  font-size: 20px;
+}
+
+/* Products */
+.campaign-products {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+.campaign-products h2 {
+  font-size: 30px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  padding-bottom: 80px;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.product-card button {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.custom-btn {
+  padding: 10px 22px;
+  border: 1px solid #222;
+  color: #222;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  text-transform: capitalize;
+  margin-top: 0;
+  position: absolute;
+  bottom: 20px;
+  width: 90%;
+  text-align: left;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.custom-btn:hover {
+  background: #222;
+  color: #fff;
+}
+.product-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  line-height: 22px;
+  color: #000;
+}
+.product-card a {
+  display: block;
+}
+
+.product-card:hover img {
+  transform: scale(1.1);
+}
+
+.product-card img {
+  transition: all 0.3s;
+}
+
+.product-card:hover h3 {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .campaign-partners {
+      grid-template-columns: 1fr;
+  }
+
+  .campaign-hero h1 {
+      font-size: 32px;
+  }
+}
+
+</style>
+    

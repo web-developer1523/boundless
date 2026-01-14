@@ -1,0 +1,513 @@
+{% assign brand_handle = request.path | split: '/' | last %}
+
+{% assign brand = shop.metaobjects.brand[brand_handle] %}
+
+
+{% comment %} <section class="brand-section">
+    <div class="brand-name">
+        <h2>{{ brand.name }}</h2>
+    </div>
+    <div class="brand-logo-image">
+        <img src="{{ brand.logo | image_url }}" alt="{{ brand.name }}">
+    </div>
+    <div class="brand-description">
+        {{ brand.description | metafield_tag }}
+    </div>
+    <div class="brand-images">
+        {% for image in brand.images.value %}
+            <img src="{{ image | image_url }}">
+        {% endfor %}
+    </div>
+</section> {% endcomment %}
+<div class="brand-page">
+
+    <!-- Brand Header -->
+    <section class="brand-hero">
+        <div class="brand-hero__left">
+        <div class="brand-logo">
+            <img src="{{ brand.logo | image_url }}">
+        </div>
+        <div class="brand-info">
+            <h1>{{ brand.name }}</h1>
+            {{ brand.description | metafield_tag }}
+        </div>
+        </div>
+
+         {% comment %} <a href="https://example.com" class="brand-cta" target="_blank">
+        Visit Website ↗
+        </a>  {% endcomment %}
+    </section>
+
+    <!-- Brand Gallery -->
+    {% comment %} <section class="brand-gallery">
+        <h2>Brand Gallery</h2>
+        <div class="gallery-grid">
+            {% for image in brand.images.value %}
+                <img src="{{ image | image_url }}">
+            {% endfor %}
+        </div>
+    </section>  {% endcomment %}
+    
+    
+    <section class="campaign-products">
+        {% comment %} <h2>Products</h2> {% endcomment %}
+    {% for collection in collections %}
+        {% assign campaign_info = collection.metafields.custom.campaign.value %}
+      
+        {% if campaign_info  and campaign_info.brand.value.name == brand.name  and campaign_info.active == true %}
+      
+            <div class="product-grid">
+                {% for product in collection.products%}
+                    <div class="product-card">
+                        <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
+                        <a href="/products/{{ product.handle }}"><h3>{{ product.title }}</h3></a>
+                        <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
+                        <p>{{ product.price | money }}</p></div>
+                        <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
+                    </div>
+                {% endfor %}
+              </div>
+      
+        {% endif %}
+      {% endfor %}
+    </section>
+
+    {% comment %} <section class="campaigns past">
+        <h2>Active Campaigns</h2>
+        {% for collection in collections %} 
+            {% assign campaign_info = collection.metafields.custom.campaign.value %} 
+            {% if campaign_info.brand.value.name == brand.name and campaign_info.active == true %}
+            
+                    <div class="campaign-card past">
+                        <div class="campaign-info">
+                            <h3>{{ collection.title }}</h3>
+                            <p>{{ collection.description }}</p>
+                        </div>
+                        <span class="status live">Active</span> 
+                    </div>
+            
+            {% endif %} 
+        {% endfor %}
+    </section> {% endcomment %}
+
+    <!-- Past Campaigns -->
+    {% comment %} <section class="campaigns past">
+        <h2>Past Campaigns</h2>
+    {% for collection in collections %} 
+        {% assign campaign_info = collection.metafields.custom.campaign.value %} 
+        {% if campaign_info.brand.value.name == brand.name and campaign_info.active == false %}
+
+                
+                <div class="campaign-card past">
+                    <div class="campaign-info">
+                        <h3>{{ collection.title }}</h3>
+                        <p>{{ collection.description }}</p>
+                    </div>
+                     <span class="status completed">Inactive</span> 
+                </div>
+            
+        {% endif %} 
+    {% endfor %}
+</section> {% endcomment %}
+</div>
+<style>
+    .price-combo {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .price-combo p:first-child {
+        text-decoration: line-through;
+        opacity: 0.5;
+    }
+/* Products */
+.campaign-products {
+    max-width: 1440px;
+    margin: 0px auto;
+    padding: 0 20px;
+  }
+  .campaign-products h2 {
+    font-size: 30px;
+    color:#000;
+    text-align: left;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+  }
+  .product-card p{
+    color:#000;
+   }
+  .product-card {
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    padding-bottom: 80px;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+  
+  .product-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .product-card button {
+    background: #222;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .custom-btn {
+    padding: 10px 22px;
+    border: 1px solid #222;
+    color: #222;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    margin-top: 0;
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    text-align: left;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .custom-btn:hover {
+    background: #222;
+    color: #fff;
+  }
+  .product-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 22px;
+    color: #000;
+  }
+  .product-card a {
+    display: block;
+  }
+  
+  .product-card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .product-card img {
+    transition: all 0.3s;
+  }
+  
+  .product-card:hover h3 {
+    text-decoration: underline;
+  }
+    .brand-page {
+        color: #e5e7eb;
+        font-family: system-ui, sans-serif;
+        padding: 40px;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    
+    .brand-hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 16px;
+        padding-bottom: 60px;
+        {% comment %} flex-wrap: wrap;
+        gap: 20px; {% endcomment %}
+    }
+    
+    .brand-hero__left {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .brand-logo {
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border: 3px solid #000;
+        width: 100%;
+        width: 130px;
+        height: 100%;
+        height: 130px;
+        object-fit: cover;
+    }
+    
+    .brand-logo img {
+        width: 100%;
+        max-width: fit-content;
+        height: 100%;
+        object-fit: contain;
+        /* max-height: fit-content; */
+        padding: 10px;
+        min-width: 120px;
+    }
+    
+    .brand-info h1 {
+        margin: 0;
+        font-size: 36px;
+        color: #000;
+    }
+    
+    .brand-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #60a5fa;
+    margin-bottom: 8px;
+    }
+    
+    .brand-info p {
+        color: #000;
+        margin: 8px 0 0;
+        font-size: 16px;
+        {% comment %} max-width: 930px; {% endcomment %}
+    }
+    
+    .brand-cta {
+        background: #000;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        min-width: 130px;
+    }
+    .brand-cta:hover {
+        background: #fff;
+        {% comment %} transform: translateY(-2px); {% endcomment %}
+        {% comment %} box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3); {% endcomment %}
+        border: 1px solid black;
+        color: black;
+    }
+    
+    
+    .brand-gallery h2, .campaigns h2 {
+        margin-bottom: 20px;
+        color: #000;
+        font-size: 30px;
+    }
+    
+    .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+    }
+    
+    .gallery-grid img {
+        width: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+        height: 100%;
+        max-height: 330px;
+    }
+    
+    .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    }
+    
+    .badge-live {
+    background: #052e16;
+    color: #22c55e;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    }
+    
+    .campaign-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* background: #020617; */
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        border: 1px solid #020617;
+        color: #020617;
+        gap:10px;
+    }
+    
+    .campaign-info h3 {
+        margin: 0;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .campaign-info p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    {% comment %} color: #9ca3af; {% endcomment %}
+    }
+    
+    .status {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    }
+    
+    .status.live {
+    color: #22c55e;
+    }
+    
+    .status.completed {
+    color: #6b7280;
+    }
+    
+    .status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    }
+    .brand-info {
+        width: 100%;
+        max-width: 1000px;
+    }
+    @media screen and (max-width: 1024px){
+        .brand-logo {
+            
+            width: 110px;
+            
+            height: 110px;
+            
+        }
+        .gallery-grid {
+           
+            grid-template-columns: repeat(3, 1fr);
+           
+        }
+    }
+    @media screen and (max-width: 767px){
+        .brand-page {
+            
+            padding: 20px;
+            
+        }
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+        }
+        .gallery-grid img {
+            
+            max-height: 230px;
+        }
+        .campaign-info p {
+           
+            max-width: 450px;
+        }
+        .brand-hero {
+            
+            padding-bottom: 35px;
+        }
+        .brand-gallery h2, .campaigns h2 {
+            
+            font-size: 25px;
+        }
+        .brand-info {
+            width: 100%;
+            max-width: 410px;
+        }
+    }
+    @media screen and (max-width: 575px){
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            padding: 15px;
+        }
+        .brand-info h1 {
+            
+            font-size: 30px;
+            
+        }
+        .gallery-grid img {
+            
+            max-height: 220px;
+        }
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .brand-info {
+            width: 100%;
+            max-width: 300px;
+        }
+        .brand-hero__left {
+            
+            align-items: start;
+        }
+        .brand-hero {
+           
+            align-items: start;
+           
+        }
+    }
+    @media screen and (max-width: 480px){
+        .brand-hero {
+            
+           
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            padding: 10px;
+        }
+        .brand-info h1 {
+            font-size: 25px;
+        }
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .brand-gallery h2, .campaigns h2 {
+            font-size: 22px;
+        }
+        .brand-hero {
+            padding-bottom: 25px;
+        }
+        .gallery-grid img {
+            max-height: 150px;
+        }
+        .brand-hero__left {
+            
+            flex-wrap: wrap;
+        }
+    }
+      
+</style>
+
+{% schema %}
+{
+    "name": "Brand main section",
+    "settings": [
+    ],
+    "presets": [
+        {
+            "name": "Brand main section",
+        }
+    ]
+}
+{% endschema %}
