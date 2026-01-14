@@ -123,7 +123,7 @@
   
   {% assign campaign = nil %}
 
-  {% for collection in product.collections %}
+  {% for collection in product_resource.collections %}
     {% if collection.metafields.custom.campaign != blank %}
       {% assign campaign = collection.metafields.custom.campaign.value %}
       {% break %}
@@ -133,10 +133,10 @@
   {%- comment -%}
   BASE PRICE (use variant price if available)
 {%- endcomment -%}
-{% if product.selected_or_first_available_variant %}
-  {% assign base_price = product.selected_or_first_available_variant.price %}
+{% if product_resource.selected_or_first_available_variant %}
+  {% assign base_price = product_resource.selected_or_first_available_variant.price %}
 {% else %}
-  {% assign base_price = product.price %}
+  {% assign base_price = product_resource.price %}
 {% endif %}
 
 {% assign price_cents = base_price %}

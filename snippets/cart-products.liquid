@@ -229,13 +229,7 @@
                           </div>
                         {%- endfor -%}
                       {%- endif -%}
-                      {% if item.properties._donation_amount and item.properties._cause_value %}
-                        <div class="donation-info" style="color:red;">
-                          <p>
-                            {{ item.properties._donation_amount  }} goes directly to {{ item.properties._cause_value }}
-                          </p>
-                        </div>
-                      {% endif %}
+                     
                       
                       {%- for property in item.properties -%}
                         {%- assign property_first_char = property.first | slice: 0 -%}
@@ -297,6 +291,13 @@
                       {% endif %}
                     {% endif %}
                   </div>
+                  {% if item.properties._donation_amount and item.properties._cause_value %}
+                    <div class="donation-info" style="color:red;">
+                      <p>
+                        {{ item.properties._donation_amount  }} goes directly to {{ item.properties._cause_value }}
+                      </p>
+                    </div>
+                  {% endif %}
                 </td>
                 <td
                   class="cart-items__quantity"
