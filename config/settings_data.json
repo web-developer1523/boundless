@@ -722,7 +722,9 @@
     "custom_css": [
       "/* Center footer text on mobile only */@media screen and (max-width: 749px) {footer * {text-align: center !important; }}",
       " /* Mobile - Heading 5 size */@media screen and (max-width: 749px) {#template--25889293435192__section_WUPjVE__text_RFmbYQ {font-size: 1rem; }}",
-      " /* Desktop - Heading 3 size */@media screen and (min-width: 750px) {#template--25889293435192__section_WUPjVE__text_RFmbYQ {font-size: 1.75rem; }}"
+      " /* Desktop - Heading 3 size */@media screen and (min-width: 750px) {#template--25889293435192__section_WUPjVE__text_RFmbYQ {font-size: 1.75rem; }}",
+      " /* Reduce spacing between dropdown menu columns */.header__menu .mega-menu__list {gap: 1rem;}",
+      " /* Or target the menu items directly */.header__menu .mega-menu__item {padding-left: 0.5rem; padding-right: 0.5rem;}"
     ]
   }
 }

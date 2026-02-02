@@ -9,13 +9,13 @@
  */
 {
   "sections": {
-    "brand_main_VJheWk": {
+    "brand_main_GhtUif": {
       "type": "brand-main",
       "name": "Brand main section",
       "settings": {}
     }
   },
   "order": [
-    "brand_main_VJheWk"
+    "brand_main_GhtUif"
   ]
 }

@@ -5,11 +5,19 @@
 <section class="campaign-hero">
     <div class="campaign-hero__content">
       <h1>{{ campaign_info.name }}</h1>
-      <p class="campaign-name">{{ campaign_info.hero_copy | metafield_text }}</p> 
+      <p class="campaign-name">{{ campaign_info.hero_copy | metafield_tag | replace:'<p>','' | replace: '</p>', ''}}</p> 
     </div>
     <div class="campaign-btns">
-      <a href="/pages/brand/{{ campaign_info.brand.value.slug }}" class="btn">About This Brand</a>
-      <a href="/pages/cause/{{ campaign_info.cause.value.slug }}" class="btn">About This Cause</a>
+      <div class="campaign-btns__slot campaign-btns__slot--brand">
+        {% if campaign_info.brand.value %}
+          <a href="/pages/brand/{{ campaign_info.brand.value.slug }}" class="btn">About This Brand</a>
+        {% endif %}
+      </div>
+      <div class="campaign-btns__slot campaign-btns__slot--cause">
+        {% if campaign_info.cause.value %}
+          <a href="/pages/cause/{{ campaign_info.cause.value.slug }}" class="btn">About This Cause</a>
+        {% endif %}
+      </div>
     </div>
 </section>
 
@@ -43,6 +51,11 @@
             <a href="/products/{{ product.handle }}"><h3>{{ product.title }}</h3></a>
             <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
             <p>{{ product.price | money }}</p></div>
+            {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}
+            {% if cause_pct > 0 %}
+              {% assign charity_cents = product.price | times: cause_pct | divided_by: 100 %}
+              <p class="charity-amount">{{ charity_cents | money }} goes directly to the {{ campaign_info.cause.value.name }}</p>
+            {% endif %}
             <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
         </div>
         {% endfor %}
@@ -61,6 +74,13 @@
   text-decoration: line-through;
   opacity: 0.5;
 }
+
+.charity-amount {
+  font-size: 13px;
+  color: red;
+  margin: 8px 0 12px 0;
+  font-weight: 500;
+}
 /* Hero */
 .impact-statement {
   text-align: center;
@@ -68,10 +88,11 @@
   font-size: 18px;
 }
 .campaign-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-  url("//edh4qkdy17k9vfqs-97383514424.shopifypreview.com/cdn/shop/collections/pexels-cottonbro-10664918.jpg")
+  background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)),
+  url("{{ collection.featured_image | image_url }}")
       center / cover no-repeat;
   padding: 50px 20px;
+  background-position: center top;
   color: #fff;
   height: 500px;
   display: flex;
@@ -80,10 +101,16 @@
   flex-direction: column;
 }
 .campaign-btns {
-  display: flex;
-  justify-content: space-between !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
+}
+.campaign-btns__slot--brand {
+  justify-self: start;
+}
+.campaign-btns__slot--cause {
+  justify-self: end;
 }
 .campaign-hero__content {
   max-width: 50%;
@@ -266,6 +293,9 @@
 
   .campaign-hero h1 {
       font-size: 32px;
+  }
+  .campaign-hero__content{
+    max-width:100%;
   }
 }
 
