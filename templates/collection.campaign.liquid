@@ -1,6 +1,22 @@
 {% assign campaign_handle = request.path | split: '/' | last %} 
 {% comment %} {% assign campaign = shop.metaobjects.campaign[campaign_handle] %} {% endcomment %} 
 {% assign campaign_info = collection.metafields.custom.campaign.value %}
+{% comment %}
+  Hide charity amount on specific collections. One handle or multiple (comma-separated).
+  Example: 'sale' or 'sale, clearance, no-charity'
+{% endcomment %}
+{% assign hide_charity_collection_handles = 'spectrum-academy-t-shirt-design-contest' | split: ',' %}
+{% assign show_charity_amount = true %}
+{% for handle in hide_charity_collection_handles %}
+  {% assign trimmed = handle | strip %}
+  {% if collection.handle == trimmed %}
+    {% assign show_charity_amount = false %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% comment %} Hero background: 1280px for mobile, 2560px for desktop (sharp on all devices) {% endcomment %}
+{% assign hero_bg_mobile = collection.featured_image | image_url: width: 1080 %}
+{% assign hero_bg_desktop = collection.featured_image | image_url: width: 1900 %}
 
 <section class="campaign-hero">
     <div class="campaign-hero__content">
@@ -47,16 +63,16 @@
     <div class="product-grid">
         {% for product in collection.products %}
         <div class="product-card">
-            <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
-            <a href="/products/{{ product.handle }}"><h3>{{ product.title }}</h3></a>
+            <a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image | image_url }}" /></a>
+            <a href="{{ product.url | within: collection }}"><h3>{{ product.title }}</h3></a>
             <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
             <p>{{ product.price | money }}</p></div>
             {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}
-            {% if cause_pct > 0 %}
+            {% if cause_pct > 0 and show_charity_amount %}
               {% assign charity_cents = product.price | times: cause_pct | divided_by: 100 %}
-              <p class="charity-amount">{{ charity_cents | money }} goes directly to the {{ campaign_info.cause.value.name }}</p>
+              <p class="charity-amount">{{ charity_cents | money }} goes directly to {{ campaign_info.cause.value.name }}</p>
             {% endif %}
-            <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
+            <a href="{{ product.url | within: collection }}" class="custom-btn">Add to Cart</a>
         </div>
         {% endfor %}
     </div>
@@ -88,17 +104,22 @@
   font-size: 18px;
 }
 .campaign-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
-  url("{{ collection.featured_image | image_url }}")
-      center / cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("{{ hero_bg_mobile }}") center / cover no-repeat;
   padding: 50px 20px;
   background-position: center top;
   color: #fff;
-  height: 500px;
+  height: 550px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+@media (min-width: 769px) {
+  .campaign-hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("{{ hero_bg_desktop }}");
+  }
 }
 .campaign-btns {
   display: grid;

@@ -1,6 +1,10 @@
 {%- doc -%}
   This snippet is used to render a product card.
-  It is used in the product block,featured product block, and the product card block.
+  It is used in the product block, featured product block, and the product card block.
+
+  Campaign pricing: when on a collection template, uses that collection's campaign
+  (so the correct campaign applies when a product is in multiple collections).
+  The collection handle used for the calculation is shown when cause discount applies.
 
   @param {product} product_resource - The product to render
   @param {boolean} [show_unit_price] - Whether to show the unit price
@@ -122,13 +126,39 @@
   {%- endif -%}
   
   {% assign campaign = nil %}
+  {% assign campaign_collection = nil %}
 
-  {% for collection in product_resource.collections %}
-    {% if collection.metafields.custom.campaign != blank %}
-      {% assign campaign = collection.metafields.custom.campaign.value %}
-      {% break %}
+  {%- comment -%} 1) On product page: collection from URL (e.g. /collections/handle/products/... or /en/collections/handle/products/...) when user opened product from that collection {%- endcomment -%}
+  {% if template.name == 'product' and request.path contains '/collections/' and request.path contains '/products/' %}
+    {% comment %} Get segment after "collections/" so it works with or without locale prefix {% endcomment %}
+    {% assign path_after_collections = request.path | split: 'collections/' | last %}
+    {% assign path_parts = path_after_collections | split: '/' %}
+    {% assign collection_handle_from_url = path_parts[0] %}
+    {% if collection_handle_from_url != blank %}
+      {% assign url_collection = collections[collection_handle_from_url] %}
+      {% if url_collection != blank and url_collection.metafields.custom.campaign != blank %}
+        {% assign campaign = url_collection.metafields.custom.campaign.value %}
+        {% assign campaign_collection = url_collection %}
+      {% endif %}
     {% endif %}
-  {% endfor %}
+  {% endif %}
+
+  {%- comment -%} 2) On collection template: use current collection (product card on collection page) {%- endcomment -%}
+  {% if campaign == nil and template.name == 'collection' and collection != blank and collection.metafields.custom.campaign != blank %}
+    {% assign campaign = collection.metafields.custom.campaign.value %}
+    {% assign campaign_collection = collection %}
+  {% endif %}
+
+  {%- comment -%} 3) Fallback: first product collection that has a campaign {%- endcomment -%}
+  {% if campaign == nil %}
+    {% for coll in product_resource.collections %}
+      {% if coll.metafields.custom.campaign != blank %}
+        {% assign campaign = coll.metafields.custom.campaign.value %}
+        {% assign campaign_collection = coll %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
   {%- comment -%}
   BASE PRICE (use variant price if available)
@@ -180,9 +210,14 @@
     <strong>-{{ brand_discount | money }}</strong>
   </p> {% endcomment %}
 
-  <p> 
-    {{ cause_discount | money }} goes directly to The {{campaign.cause.value.name}}
+  <p>
+    {{ cause_discount | money }} goes directly to {{ campaign.cause.value.name }}
   </p>
+  {% comment %} {% if campaign_collection.handle != blank %}
+    <p class="campaign-collection-handle">
+      <small>From collection: {{ campaign_collection.handle }}</small>
+    </p>
+  {% endif %} {% endcomment %}
 
   {% comment %} <p>Platform Discount ({{ platform_pct }}%):
     <strong>-{{ platform_discount | money }}</strong>
