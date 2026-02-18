@@ -178,7 +178,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "card_jc9KxF": {
+            "card_QCcHMm": {
               "type": "_card",
               "name": "t:names.card",
               "settings": {
@@ -206,12 +206,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "image_FD7xqz": {
+                "image_wpRj3N": {
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/2.png",
-                    "link": "shopify://collections/saint-croix-gives-back",
+                    "image": "shopify://shop_images/step_up.png",
+                    "link": "shopify://collections/step-up",
                     "image_ratio": "adapt",
                     "width": "fill",
                     "custom_width": 100,
@@ -229,11 +229,11 @@
                   },
                   "blocks": {}
                 },
-                "text_i6EWBq": {
+                "text_3GhqxL": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h1>Saint Croix Gives Back</h1>",
+                    "text": "<h1>Step Up Shop</h1>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -255,11 +255,11 @@
                   },
                   "blocks": {}
                 },
-                "text_DWLyjA": {
+                "text_VCP8Rd": {
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>The spirit of Minnesota is alive and well as luxury retailer Saint Croix lends its support to Gifts for Seniors and Children's Minnesota. Handcrafted in Minnesota for over 65 years, Saint Croix engineers luxurious natural materials into the finest knitwear in the world. Gifts for Seniors strives to alleviate the devastating adverse health impacts of loneliness and social isolation for older adults. Children's Minnesota is the only health system in the state that cares exclusively for children.</p>",
+                    "text": "<p>Success looks different for everyone. No one destination fits all, so why would one path fit all? At Step Up, we help girls (ages 14-29) define and achieve their unique visions of success. We create safe, brave spaces for girls to connect, learn, and grow alongside supportive mentors (and each other). Learn more at suwn.org</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -283,119 +283,9 @@
                 }
               },
               "block_order": [
-                "image_FD7xqz",
-                "text_i6EWBq",
-                "text_DWLyjA"
-              ]
-            },
-            "card_Qe3nrg": {
-              "type": "_card",
-              "name": "t:names.card",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "aspect_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "image_ddYGPx": {
-                  "type": "image",
-                  "name": "t:names.image",
-                  "settings": {
-                    "image": "shopify://shop_images/Untitled_design-4_c16318a4-0bb7-4534-95d1-d6d838a039d9.png",
-                    "link": "shopify://collections/life-rolls-on-shop",
-                    "image_ratio": "adapt",
-                    "width": "fill",
-                    "custom_width": 100,
-                    "width_mobile": "fill",
-                    "custom_width_mobile": 100,
-                    "height": "fit",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_h39p3q": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<h1>Life Rolls On Shop</h1>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "h5",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_eDYNYJ": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Founded by 3X World Adaptive Surfing Champion and 6X US National Adaptive Surfing Champion Jesse Billauer, Life Rolls On is dedicated to improving the quality of life for people living with various disabilities. Believing that adaptive surfing, skating, and fishing could inspire infinite possibilities beyond any disability. Life Rolls On began as a splash into the unknown on September 11, 2001; achieved 501c3 nonprofit status in 2002; and now touches the lives of hundreds of thousands.</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h6",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "image_ddYGPx",
-                "text_h39p3q",
-                "text_eDYNYJ"
+                "image_wpRj3N",
+                "text_3GhqxL",
+                "text_VCP8Rd"
               ]
             },
             "card_HUbTej": {
@@ -507,12 +397,122 @@
                 "text_bTxXQQ",
                 "text_JrCJUr"
               ]
+            },
+            "card_Qe3nrg": {
+              "type": "_card",
+              "name": "t:names.card",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "aspect_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "image_ddYGPx": {
+                  "type": "image",
+                  "name": "t:names.image",
+                  "settings": {
+                    "image": "shopify://shop_images/Untitled_design-4_c16318a4-0bb7-4534-95d1-d6d838a039d9.png",
+                    "link": "shopify://collections/life-rolls-on-shop",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_h39p3q": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h1>Life Rolls On Shop</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "center",
+                    "type_preset": "h5",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_eDYNYJ": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Founded by 3X World Adaptive Surfing Champion and 6X US National Adaptive Surfing Champion Jesse Billauer, Life Rolls On is dedicated to improving the quality of life for people living with various disabilities. Believing that adaptive surfing, skating, and fishing could inspire infinite possibilities beyond any disability. Life Rolls On began as a splash into the unknown on September 11, 2001; achieved 501c3 nonprofit status in 2002; and now touches the lives of hundreds of thousands.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h6",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "image_ddYGPx",
+                "text_h39p3q",
+                "text_eDYNYJ"
+              ]
             }
           },
           "block_order": [
-            "card_jc9KxF",
-            "card_Qe3nrg",
-            "card_HUbTej"
+            "card_QCcHMm",
+            "card_HUbTej",
+            "card_Qe3nrg"
           ]
         }
       },
@@ -593,6 +593,117 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "card_3CpPKg": {
+              "type": "_card",
+              "name": "t:names.card",
+              "disabled": true,
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "aspect_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "image_FD7xqz": {
+                  "type": "image",
+                  "name": "t:names.image",
+                  "settings": {
+                    "image": "shopify://shop_images/2.png",
+                    "link": "shopify://collections/saint-croix-gives-back",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_i6EWBq": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h1>Saint Croix Gives Back</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "center",
+                    "type_preset": "h5",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_DWLyjA": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>The spirit of Minnesota is alive and well as luxury retailer Saint Croix lends its support to Gifts for Seniors and Children's Minnesota. Handcrafted in Minnesota for over 65 years, Saint Croix engineers luxurious natural materials into the finest knitwear in the world. Gifts for Seniors strives to alleviate the devastating adverse health impacts of loneliness and social isolation for older adults. Children's Minnesota is the only health system in the state that cares exclusively for children.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h6",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "image_FD7xqz",
+                "text_i6EWBq",
+                "text_DWLyjA"
+              ]
+            },
             "card_T7n9KD": {
               "type": "_card",
               "name": "t:names.card",
@@ -701,116 +812,6 @@
                 "image_pgyTN4",
                 "text_LLCqKY",
                 "text_FtCw7U"
-              ]
-            },
-            "card_GcFDaJ": {
-              "type": "_card",
-              "name": "t:names.card",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "aspect_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "image_wpRj3N": {
-                  "type": "image",
-                  "name": "t:names.image",
-                  "settings": {
-                    "image": "shopify://shop_images/step_up.png",
-                    "link": "shopify://collections/step-up",
-                    "image_ratio": "adapt",
-                    "width": "fill",
-                    "custom_width": 100,
-                    "width_mobile": "fill",
-                    "custom_width_mobile": 100,
-                    "height": "fit",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_3GhqxL": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<h1>Step Up Shop</h1>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "h5",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_VCP8Rd": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Success looks different for everyone. No one destination fits all, so why would one path fit all? At Step Up, we help girls (ages 14-29) define and achieve their unique visions of success. We create safe, brave spaces for girls to connect, learn, and grow alongside supportive mentors (and each other). Learn more at suwn.org</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h6",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "image_wpRj3N",
-                "text_3GhqxL",
-                "text_VCP8Rd"
               ]
             },
             "card_c6jd8j": {
@@ -925,12 +926,13 @@
             }
           },
           "block_order": [
+            "card_3CpPKg",
             "card_T7n9KD",
-            "card_GcFDaJ",
             "card_c6jd8j"
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.carousel",
       "settings": {
         "columns": 3,

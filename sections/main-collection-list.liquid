@@ -2,8 +2,30 @@
 
 {% liquid
   assign section_collections = collections
-  assign max_items = 20
+  # Show all collections by default (only non-empty collections are rendered).
+  # Use the total collections size as the max to avoid unintentionally truncating results.
+  assign max_items = collections | size
 %}
+{% comment %}
+  Render unique campaign names (don't repeat duplicates).
+  Uses a string accumulator `seen_campaigns` and `contains` check to filter repeats.
+{% endcomment %}
+{% comment %}
+  Group collections by campaign and render:
+  Campaign name:
+  1) Collection name
+{% endcomment %}
+{% assign seen_campaigns = '' %}
+{% for collection in collections %}
+  {% assign campaign_info = collection.metafields.custom.campaign.value %}
+  {% if campaign_info and campaign_info.name %}
+    {% unless seen_campaigns contains campaign_info.name %}
+      {% assign seen_campaigns = seen_campaigns | append: campaign_info.name | append: '||' %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
+
+{% assign campaign_names = seen_campaigns | split: '||' %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
@@ -34,15 +56,181 @@
   {% endif %}
 
   {% capture list_items %}
-    {% for collection in section_collections limit: max_items %}
+    {% comment %} {% for collection in section_collections limit: max_items %}
       <div class="resource-list__item">
         {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collection %}
       </div>
       {% unless forloop.last %}
         <!--@list/split-->
       {% endunless %}
-    {% endfor %}
+    {% endfor %} {% endcomment %}
+     {% assign shown = 0 %}
+
+{% for collection in section_collections %}
+  {% if collection.products_count > 0 %}
+    
+    {% if shown > 0 %}
+      <!--@list/split-->
+    {% endif %}
+
+    {% assign campaign_info = collection.metafields.custom.campaign.value %}
+    {% assign campaign_handle = '' %}
+    {% if campaign_info and campaign_info.name %}
+      {% assign campaign_handle = campaign_info.name | handleize %}
+    {% endif %}
+
+    <div class="resource-list__item" data-campaign-handle="{{ campaign_handle }}">
+      {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collection %}
+    </div>
+
+    {% assign shown = shown | plus: 1 %}
+
+    {% if shown == max_items %}
+      {% break %}
+    {% endif %}
+
+  {% endif %}
+{% endfor %}
   {% endcapture %}
+  <style>
+    .campaign-filter-wrapper { display:flex; justify-content:flex-end; margin:18px 0; }
+    .campaign-filter { display:flex; align-items:center; gap:10px; }
+    .campaign-filter-label { font-weight:600; color:var(--color-foreground, #000); margin-right:6px; }
+    .campaign-filter-select-wrap { position:relative; }
+    #campaign-filter-select {
+      min-width:220px;
+      padding:10px 36px 10px 12px;
+      border:1px solid rgb(0 0 0 / 40%)
+      border-radius:8px;
+      background:var(--color-surface, #fff);
+      box-shadow:0 6px 18px rgba(16,24,40,0.04);
+      font-size:14px;
+      color:inherit;
+      appearance:none;
+    }
+    .campaign-filter-clear {
+      position:absolute;
+      right:8px;
+      top:50%;
+      transform:translateY(-50%);
+      border:none;
+      background:transparent;
+      font-size:18px;
+      line-height:1;
+      padding:4px;
+      cursor:pointer;
+      color:rgba(0,0,0,0.35);
+    }
+    @media (max-width: 720px) {
+      .campaign-filter-wrapper { justify-content:flex-start; padding:0 12px; }
+      #campaign-filter-select { min-width:160px; }
+    }
+  </style>
+
+  <div class="campaign-filter-wrapper">
+    <div class="campaign-filter" role="region" aria-label="Campaign filter">
+      <span class="campaign-filter-label">Filter</span>
+      <div class="campaign-filter-select-wrap">
+        <label for="campaign-filter-select" class="visually-hidden">Filter by campaign</label>
+        <select id="campaign-filter-select" aria-label="Filter by campaign">
+          <option value="">All campaigns</option>
+          {% for campaign_name in campaign_names %}
+            {% assign cn = campaign_name | strip %}
+            {% if cn != '' %}
+              <option value="{{ cn | handleize }}">{{ cn }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <button id="campaign-filter-clear" class="campaign-filter-clear" aria-label="Clear campaign filter" title="Clear filter">&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="campaign-empty-message" class="campaign-empty-message" style="display:none; text-align:center; padding:28px 0; color:var(--color-foreground-muted,#666);">
+    No collections found for the selected campaign.
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var select = document.getElementById('campaign-filter-select');
+    if (!select) return;
+    var clearBtn = document.getElementById('campaign-filter-clear');
+    var messageEl = document.getElementById('campaign-empty-message');
+
+    // Retry logic: resource-list may render items after this script runs.
+    var attempts = 0;
+    var maxAttempts = 15;
+    var attemptDelay = 120; // ms
+
+    function initWithItems(items) {
+      function applyFilter(handle) {
+        items.forEach(function(it){
+          var h = (it.getAttribute('data-campaign-handle') || '').toString().trim();
+          it.style.display = (!handle || h === handle) ? '' : 'none';
+        });
+        if (messageEl) {
+          var visibleCount = items.reduce(function(acc, el){ return acc + (el.style.display !== 'none' ? 1 : 0); }, 0);
+          messageEl.style.display = (visibleCount === 0) ? '' : 'none';
+        }
+      }
+
+      select.addEventListener('change', function(){
+        var v = this.value;
+        applyFilter(v);
+        try {
+          if (history.replaceState) {
+            var url = new URL(window.location);
+            if (v) url.searchParams.set('campaign', v); else url.searchParams.delete('campaign');
+            history.replaceState(null, '', url.toString());
+          }
+        } catch(e){}
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          select.value = '';
+          select.dispatchEvent(new Event('change'));
+          if (messageEl) messageEl.style.display = 'none';
+        });
+      }
+
+      // Apply initial filter from URL if present. Try both raw and handle values.
+      try {
+        var params = new URLSearchParams(window.location.search || '');
+        var initial = params.get('campaign');
+        if (initial) {
+          // If any option value exactly matches initial, use it; otherwise try decodeURIComponent
+          var optionExists = Array.prototype.slice.call(select.options).some(function(opt){ return opt.value === initial; });
+          if (!optionExists) {
+            // try to match handleized form
+            var handled = initial.toString().trim();
+            select.value = handled;
+            applyFilter(handled);
+          } else {
+            select.value = initial;
+            applyFilter(initial);
+          }
+        } else {
+          // ensure message hidden on initial load
+          applyFilter('');
+        }
+      } catch(e){}
+    }
+
+    function findItemsAndInit() {
+      var items = Array.prototype.slice.call(document.querySelectorAll('[data-campaign-handle]'));
+      if ((items.length === 0) && attempts < maxAttempts) {
+        attempts++;
+        setTimeout(findItemsAndInit, attemptDelay);
+        return;
+      }
+      initWithItems(items);
+    }
+
+    findItemsAndInit();
+  });
+  </script>
 
   {% liquid
     # Create an array from the list items to be used for different layout types

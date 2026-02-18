@@ -56,7 +56,7 @@
 
       {% for item in cart.items %}
         {% if item.properties._donation_amount %}
-      
+          {{ item.properties | json }}
           {%- comment -%}
             "$89.00" → "89.00" → 8900
           {%- endcomment -%}
@@ -78,6 +78,11 @@
           type="hidden"
           name="attributes[Total Donation]"
           value="{{ total_donation_cents | money }}"
+        >
+        <input
+            type="hidden"
+            name="attributes[Brand]"
+            value="{{ total_donation_cents | money }}"
         >
       {% endif %}
       
@@ -291,7 +296,8 @@
                       {% endif %}
                     {% endif %}
                   </div>
-                  {% if item.properties._donation_amount and item.properties._cause_value %}
+                  {% assign donation_amount_num = item.properties._donation_amount | remove: '$' | plus: 0 %}
+                  {% if donation_amount_num > 0 and item.properties._cause_value %}
                     <div class="donation-info" style="color:red;">
                       <p>
                         {{ item.properties._donation_amount  }} goes directly to {{ item.properties._cause_value }}

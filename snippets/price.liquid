@@ -202,6 +202,11 @@
   OUTPUT
 {%- endcomment -%}
 
+{% if campaign.brand.value.name %}
+  <div class="brand-name">
+    <p>Brand: <strong>{{ campaign.brand.value.name }}</strong></p>
+  </div>
+{% endif %}
 {% if cause_discount > 0 %}
 <div class="campaign-pricing" style="color:red;">
   {% comment %} <p>Original Price: <strong>{{ price_cents | money }}</strong></p> {% endcomment %}
@@ -211,7 +216,7 @@
   </p> {% endcomment %}
 
   <p>
-    {{ cause_discount | money }} goes directly to {{ campaign.cause.value.name }}
+    {{ cause_discount | money }} straight to {{ campaign.cause.value.name }}
   </p>
   {% comment %} {% if campaign_collection.handle != blank %}
     <p class="campaign-collection-handle">

@@ -70,7 +70,7 @@
             {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}
             {% if cause_pct > 0 and show_charity_amount %}
               {% assign charity_cents = product.price | times: cause_pct | divided_by: 100 %}
-              <p class="charity-amount">{{ charity_cents | money }} goes directly to {{ campaign_info.cause.value.name }}</p>
+              <p class="charity-amount">{{ charity_cents | money }} straight to {{ campaign_info.cause.value.name }}</p>
             {% endif %}
             <a href="{{ product.url | within: collection }}" class="custom-btn">Add to Cart</a>
         </div>
