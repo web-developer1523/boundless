@@ -16,16 +16,47 @@
   1) Collection name
 {% endcomment %}
 {% assign seen_campaigns = '' %}
+{% assign seen_brands = '' %}
+{% assign seen_causes = '' %}
 {% for collection in collections %}
   {% assign campaign_info = collection.metafields.custom.campaign.value %}
+  {% assign brand_info = collection.metafields.custom.brand.value %}
+  {% assign cause_info = collection.metafields.custom.cause.value %}
+
+  {%- comment -%}
+    If brand/cause aren't set directly on the collection, fall back to values nested inside campaign metafield
+  {%- endcomment -%}
+  {% unless brand_info and brand_info.name %}
+    {% if campaign_info and campaign_info.brand and campaign_info.brand.value and campaign_info.brand.value.name %}
+      {% assign brand_info = campaign_info.brand.value %}
+    {% endif %}
+  {% endunless %}
+  {% unless cause_info and cause_info.name %}
+    {% if campaign_info and campaign_info.cause and campaign_info.cause.value and campaign_info.cause.value.name %}
+      {% assign cause_info = campaign_info.cause.value %}
+    {% endif %}
+  {% endunless %}
+
   {% if campaign_info and campaign_info.name %}
     {% unless seen_campaigns contains campaign_info.name %}
       {% assign seen_campaigns = seen_campaigns | append: campaign_info.name | append: '||' %}
     {% endunless %}
   {% endif %}
+  {% if brand_info and brand_info.name %}
+    {% unless seen_brands contains brand_info.name %}
+      {% assign seen_brands = seen_brands | append: brand_info.name | append: '||' %}
+    {% endunless %}
+  {% endif %}
+  {% if cause_info and cause_info.name %}
+    {% unless seen_causes contains cause_info.name %}
+      {% assign seen_causes = seen_causes | append: cause_info.name | append: '||' %}
+    {% endunless %}
+  {% endif %}
 {% endfor %}
 
 {% assign campaign_names = seen_campaigns | split: '||' %}
+{% assign brand_names = seen_brands | split: '||' %}
+{% assign cause_names = seen_causes | split: '||' %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
@@ -74,12 +105,34 @@
     {% endif %}
 
     {% assign campaign_info = collection.metafields.custom.campaign.value %}
+    {% assign brand_info = collection.metafields.custom.brand.value %}
+    {% assign cause_info = collection.metafields.custom.cause.value %}
+
+    {% unless brand_info and brand_info.name %}
+      {% if campaign_info and campaign_info.brand and campaign_info.brand.value and campaign_info.brand.value.name %}
+        {% assign brand_info = campaign_info.brand.value %}
+      {% endif %}
+    {% endunless %}
+    {% unless cause_info and cause_info.name %}
+      {% if campaign_info and campaign_info.cause and campaign_info.cause.value and campaign_info.cause.value.name %}
+        {% assign cause_info = campaign_info.cause.value %}
+      {% endif %}
+    {% endunless %}
+
     {% assign campaign_handle = '' %}
+    {% assign brand_handle = '' %}
+    {% assign cause_handle = '' %}
     {% if campaign_info and campaign_info.name %}
       {% assign campaign_handle = campaign_info.name | handleize %}
     {% endif %}
+    {% if brand_info and brand_info.name %}
+      {% assign brand_handle = brand_info.name | handleize %}
+    {% endif %}
+    {% if cause_info and cause_info.name %}
+      {% assign cause_handle = cause_info.name | handleize %}
+    {% endif %}
 
-    <div class="resource-list__item" data-campaign-handle="{{ campaign_handle }}">
+    <div class="resource-list__item" data-campaign-handle="{{ campaign_handle }}" data-brand-handle="{{ brand_handle }}" data-cause-handle="{{ cause_handle }}">
       {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collection %}
     </div>
 
@@ -93,44 +146,92 @@
 {% endfor %}
   {% endcapture %}
   <style>
-    .campaign-filter-wrapper { display:flex; justify-content:flex-end; margin:18px 0; }
-    .campaign-filter { display:flex; align-items:center; gap:10px; }
-    .campaign-filter-label { font-weight:600; color:var(--color-foreground, #000); margin-right:6px; }
-    .campaign-filter-select-wrap { position:relative; }
-    #campaign-filter-select {
-      min-width:220px;
-      padding:10px 36px 10px 12px;
-      border:1px solid rgb(0 0 0 / 40%)
-      border-radius:8px;
-      background:var(--color-surface, #fff);
-      box-shadow:0 6px 18px rgba(16,24,40,0.04);
-      font-size:14px;
-      color:inherit;
-      appearance:none;
+    /* container */
+    .campaign-filter-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin: 18px 0;
+      overflow-x: hidden; /* prevent accidental horizontal scroll from wide selects */
+      width: 100%;
     }
+    #campaign-filter-select, #brand-filter-select, #cause-filter-select {
+      outline: none;
+  }
+    /* layout */
+    .campaign-filter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .campaign-filter-label {
+      font-weight: 600;
+      color: var(--color-foreground, #000);
+      margin-right: 6px;
+      flex: 0 0 auto;
+    }
+
+    /* select wrapper should be flexible but not force minimum width */
+    .campaign-filter-select-wrap {
+      position: relative;
+      flex: 0 1 auto;
+      min-width: 0; /* allow child to shrink properly inside flex */
+    }
+
+    /* selects: responsive sizing, box-sizing to include padding in width */
+    #campaign-filter-select,
+    #brand-filter-select,
+    #cause-filter-select {
+      width: 100%;
+      max-width: 320px; /* reasonable desktop width */
+      min-width: 0;
+      padding: 10px 36px 10px 12px;
+      border: 1px solid rgba(0,0,0,0.4);
+      border-radius: 8px;
+      background: var(--color-surface, #fff);
+      box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+      font-size: 14px;
+      color: inherit;
+      appearance: none;
+      box-sizing: border-box;
+    }
+
     .campaign-filter-clear {
-      position:absolute;
-      right:8px;
-      top:50%;
-      transform:translateY(-50%);
-      border:none;
-      background:transparent;
-      font-size:18px;
-      line-height:1;
-      padding:4px;
-      cursor:pointer;
-      color:rgba(0,0,0,0.35);
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px;
+      cursor: pointer;
+      color: rgba(0,0,0,0.35);
     }
+
     @media (max-width: 720px) {
-      .campaign-filter-wrapper { justify-content:flex-start; padding:0 12px; }
-      #campaign-filter-select { min-width:160px; }
+      .campaign-filter-wrapper { justify-content: flex-start; padding: 0 12px; }
+      .campaign-filter-select-wrap { flex: 1 1 100%; } /* make each select full-width on small screens */
+      #campaign-filter-select,
+      #brand-filter-select,
+      #cause-filter-select {
+        max-width: 100%;
+      }
+      .campaign-filter{
+        justify-content: flex-start;
+      }
     }
   </style>
 
   <div class="campaign-filter-wrapper">
-    <div class="campaign-filter" role="region" aria-label="Campaign filter">
+    <div class="campaign-filter" role="region" aria-label="Collection filters">
       <span class="campaign-filter-label">Filter</span>
-      <div class="campaign-filter-select-wrap">
+
+      <div class="campaign-filter-select-wrap" style="margin-right:6px;">
         <label for="campaign-filter-select" class="visually-hidden">Filter by campaign</label>
         <select id="campaign-filter-select" aria-label="Filter by campaign">
           <option value="">All campaigns</option>
@@ -143,18 +244,51 @@
         </select>
         <button id="campaign-filter-clear" class="campaign-filter-clear" aria-label="Clear campaign filter" title="Clear filter">&times;</button>
       </div>
+
+      <div class="campaign-filter-select-wrap" style="margin-right:6px;">
+        <label for="brand-filter-select" class="visually-hidden">Filter by brand</label>
+        <select id="brand-filter-select" aria-label="Filter by brand">
+          <option value="">All brands</option>
+          {% for brand_name in brand_names %}
+            {% assign bn = brand_name | strip %}
+            {% if bn != '' %}
+              <option value="{{ bn | handleize }}">{{ bn }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <button id="brand-filter-clear" class="campaign-filter-clear" aria-label="Clear brand filter" title="Clear filter">&times;</button>
+      </div>
+
+      <div class="campaign-filter-select-wrap">
+        <label for="cause-filter-select" class="visually-hidden">Filter by cause</label>
+        <select id="cause-filter-select" aria-label="Filter by cause">
+          <option value="">All causes</option>
+          {% for cause_name in cause_names %}
+            {% assign cn = cause_name | strip %}
+            {% if cn != '' %}
+              <option value="{{ cn | handleize }}">{{ cn }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <button id="cause-filter-clear" class="campaign-filter-clear" aria-label="Clear cause filter" title="Clear filter">&times;</button>
+      </div>
+
     </div>
   </div>
 
   <div id="campaign-empty-message" class="campaign-empty-message" style="display:none; text-align:center; padding:28px 0; color:var(--color-foreground-muted,#666);">
-    No collections found for the selected campaign.
+    No collections found for the selected filters.
   </div>
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var select = document.getElementById('campaign-filter-select');
-    if (!select) return;
-    var clearBtn = document.getElementById('campaign-filter-clear');
+    var campaignSelect = document.getElementById('campaign-filter-select');
+    if (!campaignSelect) return;
+    var brandSelect = document.getElementById('brand-filter-select');
+    var causeSelect = document.getElementById('cause-filter-select');
+    var campaignClear = document.getElementById('campaign-filter-clear');
+    var brandClear = document.getElementById('brand-filter-clear');
+    var causeClear = document.getElementById('cause-filter-clear');
     var messageEl = document.getElementById('campaign-empty-message');
 
     // Retry logic: resource-list may render items after this script runs.
@@ -163,10 +297,16 @@
     var attemptDelay = 120; // ms
 
     function initWithItems(items) {
-      function applyFilter(handle) {
+      function applyFilter(campaign, brand, cause) {
         items.forEach(function(it){
-          var h = (it.getAttribute('data-campaign-handle') || '').toString().trim();
-          it.style.display = (!handle || h === handle) ? '' : 'none';
+          var hCampaign = (it.getAttribute('data-campaign-handle') || '').toString().trim();
+          var hBrand = (it.getAttribute('data-brand-handle') || '').toString().trim();
+          var hCause = (it.getAttribute('data-cause-handle') || '').toString().trim();
+          var show = true;
+          if (campaign && campaign !== '' && hCampaign !== campaign) show = false;
+          if (brand && brand !== '' && hBrand !== brand) show = false;
+          if (cause && cause !== '' && hCause !== cause) show = false;
+          it.style.display = show ? '' : 'none';
         });
         if (messageEl) {
           var visibleCount = items.reduce(function(acc, el){ return acc + (el.style.display !== 'none' ? 1 : 0); }, 0);
@@ -174,47 +314,71 @@
         }
       }
 
-      select.addEventListener('change', function(){
-        var v = this.value;
-        applyFilter(v);
+      function updateUrlParam(key, value) {
         try {
-          if (history.replaceState) {
-            var url = new URL(window.location);
-            if (v) url.searchParams.set('campaign', v); else url.searchParams.delete('campaign');
-            history.replaceState(null, '', url.toString());
-          }
-        } catch(e){}
-      });
+          if (!history.replaceState) return;
+          var url = new URL(window.location);
+          if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
+          history.replaceState(null, '', url.toString());
+        } catch (e) {}
+      }
 
-      if (clearBtn) {
-        clearBtn.addEventListener('click', function(e){
+      function onChange() {
+        var c = campaignSelect ? campaignSelect.value : '';
+        var b = brandSelect ? brandSelect.value : '';
+        var ca = causeSelect ? causeSelect.value : '';
+        applyFilter(c, b, ca);
+        updateUrlParam('campaign', c);
+        updateUrlParam('brand', b);
+        updateUrlParam('cause', ca);
+      }
+
+      if (campaignSelect) campaignSelect.addEventListener('change', onChange);
+      if (brandSelect) brandSelect.addEventListener('change', onChange);
+      if (causeSelect) causeSelect.addEventListener('change', onChange);
+
+      if (campaignClear) {
+        campaignClear.addEventListener('click', function(e){
           e.preventDefault();
-          select.value = '';
-          select.dispatchEvent(new Event('change'));
-          if (messageEl) messageEl.style.display = 'none';
+          campaignSelect.value = '';
+          campaignSelect.dispatchEvent(new Event('change'));
+        });
+      }
+      if (brandClear) {
+        brandClear.addEventListener('click', function(e){
+          e.preventDefault();
+          brandSelect.value = '';
+          brandSelect.dispatchEvent(new Event('change'));
+        });
+      }
+      if (causeClear) {
+        causeClear.addEventListener('click', function(e){
+          e.preventDefault();
+          causeSelect.value = '';
+          causeSelect.dispatchEvent(new Event('change'));
         });
       }
 
       // Apply initial filter from URL if present. Try both raw and handle values.
       try {
         var params = new URLSearchParams(window.location.search || '');
-        var initial = params.get('campaign');
-        if (initial) {
-          // If any option value exactly matches initial, use it; otherwise try decodeURIComponent
-          var optionExists = Array.prototype.slice.call(select.options).some(function(opt){ return opt.value === initial; });
-          if (!optionExists) {
-            // try to match handleized form
-            var handled = initial.toString().trim();
-            select.value = handled;
-            applyFilter(handled);
-          } else {
-            select.value = initial;
-            applyFilter(initial);
-          }
-        } else {
-          // ensure message hidden on initial load
-          applyFilter('');
+        var initCampaign = params.get('campaign');
+        var initBrand = params.get('brand');
+        var initCause = params.get('cause');
+
+        function setInitial(selectEl, val) {
+          if (!selectEl || !val) return '';
+          var optionExists = Array.prototype.slice.call(selectEl.options).some(function(opt){ return opt.value === val; });
+          if (optionExists) { selectEl.value = val; return val; }
+          var handled = val.toString().trim();
+          selectEl.value = handled;
+          return handled;
         }
+
+        var c = initCampaign ? setInitial(campaignSelect, initCampaign) : '';
+        var b = initBrand ? setInitial(brandSelect, initBrand) : '';
+        var ca = initCause ? setInitial(causeSelect, initCause) : '';
+        applyFilter(c, b, ca);
       } catch(e){}
     }
 
