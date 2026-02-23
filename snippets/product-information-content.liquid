@@ -17,8 +17,6 @@
   {% endcapture %}
 
   {% capture product_details %}
-    {% content_for 'block', type: '_product-details', id: 'product-details', closest.product: product %}
-  {% endcapture %}
 
   {% capture additional_blocks %}
     {% content_for 'blocks' %}

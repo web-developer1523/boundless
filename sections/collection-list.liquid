@@ -1,5 +1,3 @@
-
-
 {% liquid
   if section.settings.collection_list != blank
     assign section_collections = section.settings.collection_list
@@ -43,16 +41,52 @@
     {% assign section_collections = section_collections | split: ',' %}
   {% endif %}
 
-  {% capture list_items %}
-    {% for collection in section_collections limit: max_items %}
-      <div class="resource-list__item">
-        {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collection %}
-      </div>
-      {% unless forloop.last %}
-        <!--@list/split-->
+  {%- comment -%} Filter selected collections and render only those with products {%- endcomment -%}
+  {% assign valid_handles = '' %}
+  {% for c in section_collections %}
+    {%- assign resolved = nil -%}
+    {%- comment -%} If c is a handle/key that maps to global collections object, prefer that {% endcomment -%}
+    {%- assign lookup = collections[c] -%}
+    {%- if lookup -%}
+      {% assign resolved = lookup %}
+    {%- elsif c.handle -%}
+      {% assign resolved = c %}
+    {%- endif -%}
+
+    {% if resolved and resolved.products_count > 0 %}
+      {% assign h = resolved.handle %}
+      {% unless valid_handles contains h %}
+        {% if valid_handles == '' %}
+          {% assign valid_handles = h %}
+        {% else %}
+          {% assign valid_handles = valid_handles | append: ',' | append: h %}
+        {% endif %}
       {% endunless %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign valid_handles = valid_handles | split: ',' %}
+  {% assign shown = 0 %}
+  {% capture list_items %}
+    {% for handle in valid_handles %}
+      {% if handle != '' %}
+        {% if shown > 0 %}
+          <!--@list/split-->
+        {% endif %}
+
+        <div class="resource-list__item">
+          {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collections[handle] %}
+        </div>
+
+        {% assign shown = shown | plus: 1 %}
+        {% if shown == max_items %}
+          {% break %}
+        {% endif %}
+      {% endif %}
     {% endfor %}
   {% endcapture %}
+
+  {% assign slide_count = shown %}
 
   {% liquid
     # Create an array from the list items to be used for different layout types
@@ -64,7 +98,7 @@
     list_items_array: list_items_array,
     settings: section.settings,
     carousel_ref: 'collectionList',
-    slide_count: max_items,
+    slide_count: slide_count,
     content_type: 'collections',
     test_id: 'collections-list-grid'
   %}

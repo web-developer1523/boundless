@@ -109,5 +109,25 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    {% if settings.quick_add or settings.mobile_quick_add %}
+      {% render 'quick-add-modal' %}
+    {% endif %}
+
+  <script>
+  (function() {
+    if (window.ShopifyAnalytics && window.ShopifyAnalytics.meta && window.ShopifyAnalytics.meta.product) {
+      var vendor = window.ShopifyAnalytics.meta.product.vendor;
+      if (vendor) {
+        var h1 = document.querySelector('h1');
+        if (h1) {
+          var p = document.createElement('p');
+          p.style.cssText = 'font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;';
+          p.textContent = vendor;
+          h1.parentElement.insertBefore(p, h1);
+        }
+      }
+    }
+  })();
+  </script>
   </body>
 </html>

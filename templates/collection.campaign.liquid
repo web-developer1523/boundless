@@ -64,7 +64,8 @@
         {% for product in collection.products %}
         <div class="product-card">
             <a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image | image_url }}" /></a>
-            <a href="{{ product.url | within: collection }}"><h3>{{ product.title }}</h3></a>
+            <a href="{{ product.url | within: collection }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
+            <h3>{{ product.title }}</h3></a>
             <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
             <p>{{ product.price | money }}</p></div>
             {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}

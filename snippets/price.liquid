@@ -202,11 +202,6 @@
   OUTPUT
 {%- endcomment -%}
 
-{% if campaign.brand.value.name %}
-  <div class="brand-name">
-    <p>Brand: <strong>{{ campaign.brand.value.name }}</strong></p>
-  </div>
-{% endif %}
 {% if cause_discount > 0 %}
 <div class="campaign-pricing" style="color:red;">
   {% comment %} <p>Original Price: <strong>{{ price_cents | money }}</strong></p> {% endcomment %}
@@ -238,6 +233,14 @@
     <strong>{{ final_price | money }}</strong>
   </p> {% endcomment %}
   
+</div>
+{% else %}
+<div class="campaign-pricing" style="color:red;">
+  {% assign donation_percentage = product.metafields.custom.donation_percentage.value | default: 0 %}
+  {% assign donation_amount = product.price | times: donation_percentage | divided_by: 100 %}
+  <p>
+    {{ donation_amount | money }} straight to {{ product.metafields.custom.charity_name.value }}
+  </p>
 </div>
 {% endif %}
 

@@ -4,7 +4,7 @@
   {% assign text = 'placeholders.product_title' | t %}
   {% assign product_title = '<p>' | append: text | append: '</p>' %}
   {% render 'text', fallback_text: product_title, block: block %}
-{% else %}
+{% else %}{% if closest.product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ closest.product.vendor }}</p>{% endif %}
   {% assign product_title = '<p>' | append: closest.product.title | append: '</p>' %}
   <a
     class="contents user-select-text"
