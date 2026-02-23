@@ -9,172 +9,58 @@
  */
 {
   "sections": {
-    "collection_list_Wfgh3m": {
-      "type": "main-collection-list",
+    "main": {
+      "type": "main-page",
       "blocks": {
-        "group_4FtiAg": {
-          "type": "group",
-          "name": "t:names.header",
-          "disabled": true,
+        "heading": {
+          "type": "text",
+          "name": "Title",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
+            "text": "",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 48,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {
-            "text_fRMQMR": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h1>Collections</h1>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_fRMQMR"
-          ]
+          "blocks": {}
         },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "below_image",
-            "horizontal_alignment": "center",
-            "vertical_alignment": "flex-start",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_7YgBPU": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_7YgBPU"
-          ]
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
         }
       },
       "block_order": [
-        "group_4FtiAg"
+        "heading",
+        "page-content"
       ],
-      "name": "Collection list",
+      "disabled": true,
       "settings": {
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 3,
-        "mobile_columns": "1",
-        "columns_gap": 12,
-        "bento_gap": 8,
-        "rows_gap": 24,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
+        "content_direction": "column",
+        "gap": 32,
         "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 40,
+        "padding-block-end": 80
       }
     },
-    "collection_list_f7wrQd": {
+    "collection_list_iEM4Wp": {
       "type": "collection-list",
       "blocks": {
-        "group_GXMj6w": {
+        "group_96pAT7": {
           "type": "group",
           "name": "t:names.header",
           "settings": {
@@ -214,7 +100,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_XYCmAF": {
+            "text_EArhHp": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
@@ -242,7 +128,7 @@
             }
           },
           "block_order": [
-            "text_XYCmAF"
+            "text_EArhHp"
           ]
         },
         "static-collection-card": {
@@ -262,7 +148,7 @@
             "border_radius": 0
           },
           "blocks": {
-            "collection_title_fctd4U": {
+            "collection_title_tt33UD": {
               "type": "collection-title",
               "name": "t:names.collection_title",
               "settings": {
@@ -306,14 +192,13 @@
             }
           },
           "block_order": [
-            "collection_title_fctd4U"
+            "collection_title_tt33UD"
           ]
         }
       },
       "block_order": [
-        "group_GXMj6w"
+        "group_96pAT7"
       ],
-      "disabled": true,
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
@@ -354,15 +239,15 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48,
-        "show_button": false,
-        "button_text": "See all brands",
+        "show_button": true,
+        "button_text": "See all collections",
         "button_url": "/collections"
       }
     },
-    "brand_collection_list_zB73W7": {
+    "brand_collection_list_WqbkFJ": {
       "type": "brand-collection-list",
       "blocks": {
-        "group_th78AX": {
+        "group_gcRVcx": {
           "type": "group",
           "name": "t:names.header",
           "settings": {
@@ -402,7 +287,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_nGnfLR": {
+            "text_CVmmkg": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
@@ -430,7 +315,7 @@
             }
           },
           "block_order": [
-            "text_nGnfLR"
+            "text_CVmmkg"
           ]
         },
         "static-collection-card": {
@@ -450,7 +335,7 @@
             "border_radius": 0
           },
           "blocks": {
-            "collection_title_EWjLCr": {
+            "collection_title_RkrdjY": {
               "type": "collection-title",
               "name": "t:names.collection_title",
               "settings": {
@@ -494,14 +379,13 @@
             }
           },
           "block_order": [
-            "collection_title_EWjLCr"
+            "collection_title_RkrdjY"
           ]
         }
       },
       "block_order": [
-        "group_th78AX"
+        "group_gcRVcx"
       ],
-      "disabled": true,
       "name": "Brand Collection List: Carousel",
       "settings": {
         "collection_list": [],
@@ -521,15 +405,15 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48,
-        "show_button": false,
+        "show_button": true,
         "button_text": "See all brands",
-        "button_url": "/collections"
+        "button_url": "/pages/all-brands"
       }
     },
-    "collection_list_bMxXkg": {
+    "collection_list_DQqpNm": {
       "type": "collection-list",
       "blocks": {
-        "group_gcNRtU": {
+        "group_7dTThx": {
           "type": "group",
           "name": "t:names.header",
           "settings": {
@@ -569,7 +453,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_VWwXq8": {
+            "text_VhkhmA": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
@@ -597,7 +481,7 @@
             }
           },
           "block_order": [
-            "text_VWwXq8"
+            "text_VhkhmA"
           ]
         },
         "static-collection-card": {
@@ -617,7 +501,7 @@
             "border_radius": 0
           },
           "blocks": {
-            "collection_title_EiYqLa": {
+            "collection_title_QCjFgj": {
               "type": "collection-title",
               "name": "t:names.collection_title",
               "settings": {
@@ -661,14 +545,13 @@
             }
           },
           "block_order": [
-            "collection_title_EiYqLa"
+            "collection_title_QCjFgj"
           ]
         }
       },
       "block_order": [
-        "group_gcNRtU"
+        "group_7dTThx"
       ],
-      "disabled": true,
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
@@ -714,16 +597,16 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48,
-        "show_button": false,
-        "button_text": "See all brands",
-        "button_url": "/collections"
+        "show_button": true,
+        "button_text": "See all campaign",
+        "button_url": "/pages/campaigns"
       }
     }
   },
   "order": [
-    "collection_list_Wfgh3m",
-    "collection_list_f7wrQd",
-    "brand_collection_list_zB73W7",
-    "collection_list_bMxXkg"
+    "main",
+    "collection_list_iEM4Wp",
+    "brand_collection_list_WqbkFJ",
+    "collection_list_DQqpNm"
   ]
 }

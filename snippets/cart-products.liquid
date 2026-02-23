@@ -56,7 +56,7 @@
 
       {% for item in cart.items %}
         {% if item.properties._donation_amount %}
-          {{ item.properties | json }}
+          
           {%- comment -%}
             "$89.00" → "89.00" → 8900
           {%- endcomment -%}
@@ -301,6 +301,14 @@
                     <div class="donation-info" style="color:red;">
                       <p>
                         {{ item.properties._donation_amount  }} goes directly to {{ item.properties._cause_value }}
+                      </p>
+                    </div>
+                  {% else %}
+                    <div class="donation-info" style="color:red;">
+                      {% assign donation_percentage = item.product.metafields.custom.donation_percentage.value | default: 0 %}
+                      {% assign donation_amount = item.product.price | times: donation_percentage | divided_by: 100 %}
+                      <p>
+                        {{ donation_amount | money }} goes directly to {{ item.product.metafields.custom.charity_name.value }}
                       </p>
                     </div>
                   {% endif %}

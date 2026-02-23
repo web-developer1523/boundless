@@ -102,6 +102,13 @@
     content_type: 'collections',
     test_id: 'collections-list-grid'
   %}
+  {% if section.settings.show_button %}
+    <div class="brand-list__cta" style="text-align:center; margin-top:16px;margin:0 auto;">
+      <a href="{{ section.settings.button_url }}" class="button" aria-label="{{ section.settings.button_text }}">
+        {{ section.settings.button_text }}
+      </a>
+    </div>
+  {% endif %}
 </div>
 
 {% schema %}
@@ -385,6 +392,26 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button after carousel",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "See all brands",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "text",
+      "id": "button_url",
+      "label": "Button URL",
+      "default": "/collections",
+      "visible_if": "{{ section.settings.show_button == true }}"
     }
   ],
   "presets": [

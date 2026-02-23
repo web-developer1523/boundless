@@ -570,7 +570,10 @@
         "gap": 12,
         "color_scheme": "",
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "show_button": true,
+        "button_text": "See all collections",
+        "button_url": "/collections"
       }
     },
     "brand_collection_list_r3gWKt": {
@@ -925,7 +928,10 @@
         "gap": 12,
         "color_scheme": "",
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "show_button": true,
+        "button_text": "See all campaign",
+        "button_url": "/pages/campaigns"
       }
     },
     "carousel_WAmJWg": {
@@ -1575,7 +1581,10 @@
         "gap": 30,
         "color_scheme": "scheme-2",
         "padding-block-start": 38,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "show_button": false,
+        "button_text": "See all brands",
+        "button_url": "/collections"
       }
     }
   },
