@@ -152,6 +152,7 @@
       "block_order": [
         "group_4FtiAg"
       ],
+      "disabled": true,
       "name": "Collection list",
       "settings": {
         "layout_type": "grid",
@@ -313,32 +314,15 @@
       "block_order": [
         "group_GXMj6w"
       ],
-      "disabled": true,
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "home-goods",
-          "kids",
-          "kids-accessories",
-          "kids-bottoms-1",
-          "kids-dresses",
-          "kids-jackets",
-          "kids-bottoms",
-          "kids-tops",
-          "mens",
-          "mens-accessories",
-          "mens-shorts-and-pants",
-          "mens-jackets",
-          "mens-shoes-1",
-          "mens-shirts",
           "womens",
-          "mens-shoes",
-          "womens-tops",
-          "womens-jackets",
-          "womens-shoes",
-          "womens-tops-1"
+          "mens",
+          "home-goods",
+          "beauty-and-wellness"
         ],
-        "layout_type": "carousel",
+        "layout_type": "grid",
         "carousel_on_mobile": false,
         "columns": 3,
         "mobile_columns": "2",

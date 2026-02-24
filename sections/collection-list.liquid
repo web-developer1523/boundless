@@ -43,24 +43,23 @@
 
   {%- comment -%} Filter selected collections and render only those with products {%- endcomment -%}
   {% assign valid_handles = '' %}
+
   {% for c in section_collections %}
     {%- assign resolved = nil -%}
-    {%- comment -%} If c is a handle/key that maps to global collections object, prefer that {% endcomment -%}
     {%- assign lookup = collections[c] -%}
+  
     {%- if lookup -%}
       {% assign resolved = lookup %}
     {%- elsif c.handle -%}
       {% assign resolved = c %}
     {%- endif -%}
-
+  
     {% if resolved and resolved.products_count > 0 %}
       {% assign h = resolved.handle %}
-      {% unless valid_handles contains h %}
-        {% if valid_handles == '' %}
-          {% assign valid_handles = h %}
-        {% else %}
-          {% assign valid_handles = valid_handles | append: ',' | append: h %}
-        {% endif %}
+      {% assign check = ',' | append: h | append: ',' %}
+  
+      {% unless valid_handles contains check %}
+        {% assign valid_handles = valid_handles | append: check %}
       {% endunless %}
     {% endif %}
   {% endfor %}
@@ -80,6 +79,7 @@
 
         {% assign shown = shown | plus: 1 %}
         {% if shown == max_items %}
+          {{ shown }}
           {% break %}
         {% endif %}
       {% endif %}
@@ -92,6 +92,7 @@
     # Create an array from the list items to be used for different layout types
     assign list_items_array = list_items | strip | split: '<!--@list/split-->'
   %}
+
 
   {% render 'resource-list',
     list_items: list_items,
