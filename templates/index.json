@@ -23,14 +23,55 @@
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
+        "text_YLPk4p": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2><strong>Other stores keep your money.</strong></h2><h2><strong>We give it away. <br/>        </strong></h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 100,
+            "padding-block-end": 100,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_H9gpTf": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop Now",
+            "link": "shopify://pages/shop",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        },
         "text_7WCnDX": {
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p><strong>Other stores keep your money. <br/>We give it away. <br/>We're not great at business.</strong></p>",
+            "text": "",
             "width": "100%",
             "max_width": "none",
-            "alignment": "right",
+            "alignment": "center",
             "type_preset": "custom",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -43,65 +84,30 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 30,
+            "padding-block-end": 100,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p><strong>Shop Like You <br/>Give A Sh!t</strong></p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "right",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 10,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Start Shopping",
-            "link": "shopify://pages/shop",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "text_7WCnDX",
         "text_YLPk4p",
-        "button_H9gpTf"
+        "button_H9gpTf",
+        "text_7WCnDX"
+      ],
+      "custom_css": [
+        ".hero__container {--padding-block-start: 1rem; --padding-block-end: 0; align-content: start; align-items: start;}",
+        ".hero__container .size-style {margin-inline: auto; margin-top: -6rem;}",
+        ".hero__container a.button {background-color: white; color: black; border: none;}",
+        ".hero__container a.button {font-weight: 700; font-size: 17px;}"
       ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "video",
-        "media_type_2": "video",
-        "image_2": "shopify://shop_images/pexels-cottonbro-10665549.jpg",
-        "video_2": "shopify://files/videos/chewing gum black and white.mp4",
+        "media_type_2": "image",
+        "image_2": "shopify://shop_images/savvyd_15154_editorial_image_of_a_girl_in_a_with_a_brown_sleek__5b6ea309-bf16-4023-87c9-0332100dbd50.png",
+        "video_2": "shopify://files/videos/Pink3.mp4",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
@@ -436,7 +442,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>[Collections]</h3>",
+                "text": "<h3>[Discover]</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -536,12 +542,13 @@
         "collection_list": [
           "womens",
           "mens",
-          "home-goods",
-          "beauty-and-wellness"
+          "beauty-and-wellness",
+          "accessories",
+          "home-goods"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "columns": 3,
+        "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
@@ -555,8 +562,8 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48,
-        "show_button": true,
-        "button_text": "See all collections",
+        "show_button": false,
+        "button_text": "See all categories",
         "button_url": "/collections"
       }
     },
@@ -774,7 +781,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>[Brands]</h3>",
+                "text": "<h3>[Brands That Give A...]</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -872,30 +879,18 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "amber-interiors",
-          "cleobella",
-          "johnnie-o",
           "l-space",
-          "le-bon-shoppe",
-          "marine-layer",
           "michael-stars",
           "nili-lotan",
-          "outerknown",
           "paige",
           "ripley-raider",
-          "saint-croix-collections",
-          "sammy-nat",
-          "boardriders-inc",
-          "spectrum-academy-t-shirt-design-contest",
           "t3",
-          "the-cancer-cartel-shop",
-          "the-goa-gift-shop",
           "vitamin-a",
           "white-and-warren"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "columns": 3,
+        "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
@@ -910,7 +905,7 @@
         "padding-block-start": 48,
         "padding-block-end": 48,
         "show_button": true,
-        "button_text": "Shop All brands",
+        "button_text": "Shop All Brands",
         "button_url": "/pages/all-brands"
       }
     },
@@ -961,7 +956,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>[Collabs]</h3>",
+                "text": "<h3>[ Collabs For A Cause]</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -1080,7 +1075,7 @@
         "padding-block-start": 48,
         "padding-block-end": 48,
         "show_button": true,
-        "button_text": "Shop Collabs",
+        "button_text": "Shop All Collabs",
         "button_url": "/pages/campaigns"
       }
     },

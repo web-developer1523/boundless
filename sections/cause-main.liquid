@@ -83,31 +83,144 @@
       {% endfor %}
     </section> {% endcomment %}
 <!-- 4️⃣ Products -->
+
 <section class="campaign-products">
     {% comment %} <h2>Products</h2> {% endcomment %}
-{% for collection in collections %}
-    {% assign campaign_info = collection.metafields.custom.campaign.value %}
-  
-    {% if campaign_info  and campaign_info.cause.value.name == cause.name  and campaign_info.active == true %}
-  
-        <div class="product-grid">
-            {% for product in collection.products%}
-                <div class="product-card">
-                    <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
-                    <a href="/products/{{ product.handle }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
-            <h3>{{ product.title }}</h3></a>
-                    <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
-                    <p>{{ product.price | money }}</p></div>
-                    <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
-                </div>
-            {% endfor %}
-          </div>
-  
+    {% assign cause_collection_slug = '' %}
+    {% assign use_multiple_collections = false %}
+    {% if cause.collections.value != blank and cause.collections.value.size > 0 %}
+        {% assign use_multiple_collections = true %}
+    {% elsif cause.collection.value.handle != blank %}
+        {% assign cause_collection_slug = cause.collection.value.handle %}
+    {% else %}
+        {% for collection in collections %}
+            {% assign campaign_info = collection.metafields.custom.campaign.value %}
+            {% if campaign_info and campaign_info.cause.value.name == cause.name and campaign_info.slug != blank and cause_collection_slug == blank %}
+                {% assign cause_collection_slug = campaign_info.slug %}
+            {% endif %}
+        {% endfor %}
     {% endif %}
-  {% endfor %}
+
+    {% if use_multiple_collections %}
+        {% comment %} Products from all collections in the Cause's Collections list {% endcomment %}
+        <div class="product-grid" id="cause-campaign-product-grid">
+            {% for col in cause.collections.value %}
+                {% for product in col.products %}
+                    <div class="product-card">
+                        <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
+                        <a href="/products/{{ product.handle }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
+                        <h3>{{ product.title }}</h3></a>
+                        <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
+                        <p>{{ product.price | money }}</p></div>
+                        <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% else %}
+        {% assign collection_by_slug = collections[cause_collection_slug] %}
+        {% if collection_by_slug != blank %}
+            {% assign products_per_page = 50 %}
+            {% paginate collection_by_slug.products by products_per_page %}
+            <section
+              class="campaign-products-infinite"
+              id="cause-campaign-products-section"
+              data-collection-url="{{ collection_by_slug.url }}"
+              data-current-page="{{ paginate.current_page }}"
+              data-last-page="{{ paginate.pages }}"
+            >
+                {% comment %} <p class="campaign-products__count">{{ collection_by_slug.all_products_count }} {% if collection_by_slug.all_products_count == 1 %}product{% else %}products{% endif %}</p> {% endcomment %}
+                <div class="product-grid" id="cause-campaign-product-grid">
+                    {% for product in collection_by_slug.products %}
+                        <div class="product-card">
+                            <a href="/products/{{ product.handle }}"><img src="{{ product.featured_image | image_url }}" /></a>
+                            <a href="/products/{{ product.handle }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
+                            <h3>{{ product.title }}</h3></a>
+                            <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
+                            <p>{{ product.price | money }}</p></div>
+                            <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if paginate.pages > 1 %}
+                <div class="cause-infinite-sentinel" id="cause-infinite-sentinel" aria-hidden="true"></div>
+                <p class="cause-infinite-status" id="cause-infinite-status" hidden></p>
+                <p class="cause-infinite-status cause-infinite-status--done" id="cause-infinite-done" hidden></p>
+                {% endif %}
+            </section>
+            <script>
+            (function() {
+              const section = document.getElementById('cause-campaign-products-section');
+              const grid = document.getElementById('cause-campaign-product-grid');
+              const sentinel = document.getElementById('cause-infinite-sentinel');
+              const statusEl = document.getElementById('cause-infinite-status');
+              const doneEl = document.getElementById('cause-infinite-done');
+              if (!section || !grid) return;
+              if (!sentinel) return;
+
+              let currentPage = parseInt(section.dataset.currentPage || '1', 10);
+              const lastPage = parseInt(section.dataset.lastPage || '1', 10);
+              const baseUrl = section.dataset.collectionUrl || '';
+              let loading = false;
+
+              if (currentPage >= lastPage) {
+                sentinel.hidden = true;
+                if (doneEl) doneEl.hidden = false;
+                return;
+              }
+
+              const observer = new IntersectionObserver(
+                function(entries) {
+                  if (loading || currentPage >= lastPage) return;
+                  if (!entries[0].isIntersecting) return;
+                  loadNextPage();
+                },
+                { rootMargin: '200px', threshold: 0 }
+              );
+              observer.observe(sentinel);
+
+              async function loadNextPage() {
+                loading = true;
+                if (statusEl) { statusEl.hidden = false; statusEl.textContent = ' '; }
+                const nextPage = currentPage + 1;
+                const url = baseUrl + (baseUrl.indexOf('?') >= 0 ? '&' : '?') + 'page=' + nextPage;
+                try {
+                  const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                  const html = await res.text();
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(html, 'text/html');
+                  var nextGrid = doc.getElementById('cause-campaign-product-grid');
+                  if (!nextGrid) nextGrid = doc.getElementById('campaign-product-grid');
+                  if (!nextGrid) {
+                    var cards = doc.querySelectorAll('.product-card');
+                  } else {
+                    var cards = nextGrid.querySelectorAll('.product-card');
+                  }
+                  if (cards && cards.length) {
+                    cards.forEach(function(card) {
+                      grid.appendChild(document.importNode(card, true));
+                    });
+                  }
+                  currentPage = nextPage;
+                  if (currentPage >= lastPage) {
+                    sentinel.hidden = true;
+                    if (statusEl) statusEl.hidden = true;
+                    if (doneEl) doneEl.hidden = false;
+                    observer.disconnect();
+                  }
+                } catch (e) {
+                  if (statusEl) statusEl.textContent = 'Could not load more.';
+                }
+                loading = false;
+              }
+            })();
+            </script>
+            {% endpaginate %}
+        {% endif %}
+    {% endif %}
 </section>
 
-    <section class="campaigns past">
+    {% comment %} <section class="campaigns past">
             <h2>Active Campaigns</h2>
             {% for collection in collections %} 
                 {% assign campaign_info = collection.metafields.custom.campaign.value %} 
@@ -123,7 +236,7 @@
                 
                 {% endif %} 
             {% endfor %}
-    </section> 
+    </section>  {% endcomment %}
 
     <!-- Past Campaigns -->
     {% comment %} <section class="campaigns past">
@@ -181,7 +294,26 @@ a.cause-cta:hover {
     color:#000;
     text-align: left;
   }
-  
+  .campaign-products__count {
+    margin: 0 0 1em 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+  .cause-infinite-sentinel {
+    height: 1px;
+    width: 100%;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .cause-infinite-status {
+    text-align: center;
+    margin: 24px 0;
+    font-size: 14px;
+    color: #666;
+  }
+  .cause-infinite-status--done {
+    color: #888;
+  }
   .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

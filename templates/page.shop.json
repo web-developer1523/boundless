@@ -104,7 +104,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "<h3>Shop The Lineup</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -202,30 +202,14 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "home-goods",
-          "kids",
-          "kids-accessories",
-          "kids-bottoms-1",
-          "kids-dresses",
-          "kids-jackets",
-          "kids-bottoms",
-          "kids-tops",
-          "mens",
-          "mens-accessories",
-          "mens-shorts-and-pants",
-          "mens-jackets",
-          "mens-shoes-1",
-          "mens-shirts",
           "womens",
-          "mens-shoes",
-          "womens-tops",
-          "womens-jackets",
-          "womens-shoes",
-          "womens-tops-1"
+          "mens",
+          "home-goods",
+          "accessories"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "columns": 3,
+        "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
@@ -239,9 +223,9 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48,
-        "show_button": true,
-        "button_text": "See all collections",
-        "button_url": "/collections"
+        "show_button": false,
+        "button_text": "",
+        "button_url": ""
       }
     },
     "brand_collection_list_WqbkFJ": {
@@ -579,7 +563,7 @@
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
-        "columns": 3,
+        "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
@@ -645,7 +629,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by campaign</h3>",
+                "text": "<h3>Shop by Collab</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -764,7 +748,7 @@
         "padding-block-start": 48,
         "padding-block-end": 48,
         "show_button": true,
-        "button_text": "See all campaign",
+        "button_text": "See all collabs",
         "button_url": "/pages/campaigns"
       }
     }

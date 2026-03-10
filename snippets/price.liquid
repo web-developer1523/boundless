@@ -236,10 +236,10 @@
 </div>
 {% else %}
 <div class="campaign-pricing" style="color:red;">
-  {% assign donation_percentage = product.metafields.custom.donation_percentage.value | default: 0 %}
-  {% assign donation_amount = product.price | times: donation_percentage | divided_by: 100 %}
+  {% assign donation_percentage = product_resource.metafields.custom.donation_percentage.value | default: 0 %}
+  {% assign donation_amount = selected_variant.price | times: donation_percentage | divided_by: 100 %}
   <p>
-    {{ donation_amount | money }} straight to {{ product.metafields.custom.charity_name.value }}
+    {{ donation_amount | money }} straight to {{ product_resource.metafields.custom.charity_name.value }}
   </p>
 </div>
 {% endif %}

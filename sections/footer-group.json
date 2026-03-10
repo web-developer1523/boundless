@@ -56,7 +56,7 @@
             "text_LWt8Pz": {
               "type": "text",
               "settings": {
-                "text": "<h2>High Quality Spam</h2>",
+                "text": "<h2>Not Spam List</h2>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",

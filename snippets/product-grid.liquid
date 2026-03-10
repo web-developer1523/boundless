@@ -103,7 +103,8 @@
     {% if products.size == 0 %}
       <div class="main-collection-grid__empty">
         <h2 class="main-collection-grid__empty-title h2">
-          {{ 'content.no_products_found' | t }}
+          {% comment %} {{ 'content.no_products_found' | t }} {% endcomment %}
+           Shoot! Nothing here. <br>Check back soon for updated goods from this great brand.
         </h2>
         <p>
           {{ 'content.use_fewer_filters_html' | t: link: collection.url, class: 'main-collection-grid__empty-link' }}

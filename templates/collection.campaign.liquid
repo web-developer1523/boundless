@@ -58,26 +58,104 @@
 </section> {% endcomment %}
 
 <!-- 4️⃣ Products -->
-<section class="campaign-products">
+{% assign products_per_page = 24 %}
+{% paginate collection.products by products_per_page %}
+<section
+  class="campaign-products"
+  id="campaign-products-section"
+  data-collection-url="{{ collection.url }}"
+  data-current-page="{{ paginate.current_page }}"
+  data-last-page="{{ paginate.pages }}"
+>
   <div class="impact-statement">{{ campaign_info.impact_statement | metafield_tag}}</div>
-    <div class="product-grid">
-        {% for product in collection.products %}
-        <div class="product-card">
-            <a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image | image_url }}" /></a>
-            <a href="{{ product.url | within: collection }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
-            <h3>{{ product.title }}</h3></a>
-            <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
-            <p>{{ product.price | money }}</p></div>
-            {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}
-            {% if cause_pct > 0 and show_charity_amount %}
-              {% assign charity_cents = product.price | times: cause_pct | divided_by: 100 %}
-              <p class="charity-amount">{{ charity_cents | money }} straight to {{ campaign_info.cause.value.name }}</p>
-            {% endif %}
-            <a href="{{ product.url | within: collection }}" class="custom-btn">Add to Cart</a>
-        </div>
-        {% endfor %}
+  {% comment %} <p class="campaign-product-count">{% if collection.products_count == 1 %}1 product{% else %}{{ collection.products_count }} products{% endif %}</p> {% endcomment %}
+  <div class="product-grid" id="campaign-product-grid">
+    {% for product in collection.products %}
+    <div class="product-card" data-page="{{ paginate.current_page }}">
+      <a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image | image_url }}" /></a>
+      <a href="{{ product.url | within: collection }}">{% if product.vendor != blank %}<p style="font-size:0.75em;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 2px 0;">{{ product.vendor }}</p>{% endif %}
+      <h3>{{ product.title }}</h3></a>
+      <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
+      <p>{{ product.price | money }}</p></div>
+      {% assign cause_pct = campaign_info.cause.value.default_cause_pct | default: 0 %}
+      {% if cause_pct > 0 and show_charity_amount %}
+        {% assign charity_cents = product.price | times: cause_pct | divided_by: 100 %}
+        <p class="charity-amount">{{ charity_cents | money }} straight to {{ campaign_info.cause.value.name }}</p>
+      {% endif %}
+      <a href="{{ product.url | within: collection }}" class="custom-btn">Add to Cart</a>
     </div>
+    {% endfor %}
+  </div>
+  {% if paginate.pages > 1 %}
+  <div class="campaign-infinite-sentinel" id="campaign-infinite-sentinel" aria-hidden="true"></div>
+  <p class="campaign-infinite-status" id="campaign-infinite-status" hidden></p>
+  <p class="campaign-infinite-status campaign-infinite-status--done" id="campaign-infinite-done" hidden></p>
+  {% endif %}
 </section>
+{% endpaginate %}
+
+<script>
+(function() {
+  const section = document.getElementById('campaign-products-section');
+  const grid = document.getElementById('campaign-product-grid');
+  const sentinel = document.getElementById('campaign-infinite-sentinel');
+  const statusEl = document.getElementById('campaign-infinite-status');
+  const doneEl = document.getElementById('campaign-infinite-done');
+  if (!section || !grid || !sentinel) return;
+
+  let currentPage = parseInt(section.dataset.currentPage || '1', 10);
+  const lastPage = parseInt(section.dataset.lastPage || '1', 10);
+  const baseUrl = section.dataset.collectionUrl || '';
+  let loading = false;
+
+  if (currentPage >= lastPage) {
+    sentinel.hidden = true;
+    if (doneEl) doneEl.hidden = false;
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    function(entries) {
+      if (loading || currentPage >= lastPage) return;
+      if (!entries[0].isIntersecting) return;
+      loadNextPage();
+    },
+    { rootMargin: '200px', threshold: 0 }
+  );
+  observer.observe(sentinel);
+
+  async function loadNextPage() {
+    loading = true;
+    if (statusEl) statusEl.hidden = false;
+    const nextPage = currentPage + 1;
+    const url = baseUrl + (baseUrl.indexOf('?') >= 0 ? '&' : '?') + 'page=' + nextPage;
+    try {
+      const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const nextGrid = doc.getElementById('campaign-product-grid');
+      if (nextGrid) {
+        const cards = nextGrid.querySelectorAll('.product-card');
+        cards.forEach(function(card) {
+          grid.appendChild(document.importNode(card, true));
+        });
+      }
+      currentPage = nextPage;
+      history.replaceState(null, '', url);
+      if (currentPage >= lastPage) {
+        sentinel.hidden = true;
+        if (statusEl) statusEl.hidden = true;
+        if (doneEl) doneEl.hidden = false;
+        observer.disconnect();
+      }
+    } catch (e) {
+      if (statusEl) statusEl.textContent = 'Could not load more.';
+    }
+    loading = false;
+  }
+})();
+</script>
 
 <style>
   .price-combo {
@@ -103,6 +181,31 @@
   text-align: center;
   padding-bottom: 50px;
   font-size: 18px;
+}
+
+.campaign-product-count {
+  text-align: center;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.campaign-infinite-sentinel {
+  height: 1px;
+  width: 100%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.campaign-infinite-status {
+  text-align: center;
+  margin: 24px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.campaign-infinite-status--done {
+  color: #888;
 }
 .campaign-hero {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),

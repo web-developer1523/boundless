@@ -105,7 +105,7 @@
               "type": "text",
               "name": "t:names.header",
               "settings": {
-                "text": "<h3>[Featured Campaigns]</h3>",
+                "text": "<h3>[Featured Charity Collabs]</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",

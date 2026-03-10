@@ -79,9 +79,41 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "header_announcements_twhafB": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_ntG86g": {
+          "type": "_announcement",
+          "settings": {
+            "text": "<strong>Almost $200k already donated. We want to hit a millie.</strong>",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "700",
+            "letter_spacing": "normal",
+            "case": "uppercase"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_ntG86g"
+      ],
+      "disabled": true,
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 5,
+        "section_width": "page-width",
+        "color_scheme": "scheme-7b3cad30-eaf7-4115-b4ac-e1847d01bb90",
+        "divider_width": 0,
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
     }
   },
   "order": [
-    "header_section"
+    "header_section",
+    "header_announcements_twhafB"
   ]
 }
