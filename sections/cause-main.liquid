@@ -112,6 +112,11 @@
                         <h3>{{ product.title }}</h3></a>
                         <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
                         <p>{{ product.price | money }}</p></div>
+                        {% assign donation_percentage = product.metafields.custom.donation_percentage.value | default: 0 %}
+                        {% assign donation_amount = product.price | times: donation_percentage | divided_by: 100 %}
+                        <div class="campaign-pricing">
+                          <p  style="color:red;">{{ donation_amount | money }} straight to {{ product.metafields.custom.charity_name.value }}</p>
+                        </div>
                         <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
                     </div>
                 {% endfor %}
@@ -138,6 +143,11 @@
                             <h3>{{ product.title }}</h3></a>
                             <div class="price-combo"><p>{{ product.compare_at_price | money }}</p>
                             <p>{{ product.price | money }}</p></div>
+                            {% assign donation_percentage = product.metafields.custom.donation_percentage.value | default: 0 %}
+                            {% assign donation_amount = product.price | times: donation_percentage | divided_by: 100 %}
+                            <div class="campaign-pricing">
+                              <p  style="color:red;">{{ donation_amount | money }} straight to {{ product.metafields.custom.charity_name.value }}</p>
+                            </div>
                             <a href="/products/{{ product.handle }}" class="custom-btn">Add to Cart</a>
                         </div>
                     {% endfor %}

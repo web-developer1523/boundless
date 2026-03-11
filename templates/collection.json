@@ -179,6 +179,7 @@
         "group_4PVbaz",
         "group_dFzBdP"
       ],
+      "disabled": true,
       "name": "t:names.icons_with_text",
       "settings": {
         "content_direction": "row",
@@ -288,7 +289,7 @@
             "enable_grid_density": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
-            "padding-block-start": 8,
+            "padding-block-start": 0,
             "padding-block-end": 8,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
@@ -384,21 +385,22 @@
           ]
         }
       },
+      "custom_css": [],
       "settings": {
         "layout_type": "grid",
-        "product_card_size": "medium",
-        "mobile_product_card_size": "large",
+        "product_card_size": "large",
+        "mobile_product_card_size": "small",
         "enable_infinite_scroll": true,
         "products_per_page": 24,
-        "product_grid_width": "centered",
+        "product_grid_width": "full-width",
         "full_width_on_mobile": false,
-        "columns_gap_horizontal": 50,
+        "columns_gap_horizontal": 0,
         "columns_gap_vertical": 0,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 0,
+        "padding-block-end": 36
       }
     }
   },

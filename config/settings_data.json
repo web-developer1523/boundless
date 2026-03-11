@@ -17,7 +17,7 @@
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
     "type_accent_font": "inter_n7",
-    "type_size_paragraph": "14",
+    "type_size_paragraph": "12",
     "type_line_height_paragraph": "body-loose",
     "type_font_h1": "heading",
     "type_size_h1": "56",
@@ -55,7 +55,7 @@
     "primary_button_border_width": 0,
     "button_border_radius_primary": 14,
     "secondary_button_border_width": 1,
-    "button_border_radius_secondary": 14,
+    "button_border_radius_secondary": 40,
     "cart_type": "page",
     "cart_price_font": "secondary",
     "show_cart_note": false,
@@ -864,7 +864,8 @@
       " /* Or target the menu items directly */.header__menu .mega-menu__item {padding-left: 0.5rem; padding-right: 0.5rem;}",
       " /* Fix image overflow in section */#template--25889293304120__section_WRMTjE {overflow: hidden;}",
       " /* Ensure image block respects container boundaries */#template--25889293304120__section_WRMTjE__image_dxrH6h img {max-width: 100%; height: auto; display: block;}",
-      " /* Add bottom margin to image block */#template--25889293304120__section_WRMTjE__image_dxrH6h {margin-bottom: 20px;}"
+      " /* Add bottom margin to image block */#template--25889293304120__section_WRMTjE__image_dxrH6h {margin-bottom: 20px;}",
+      " /* Horizon - Force 3 columns desktop */@media screen and (min-width: 990px) {.product-list {--product-list-columns: 3 !important; --product-list-columns-desktop: 3 !important; } .product-list__inner {grid-template-columns: repeat(3, 1fr) !important; }}"
     ]
   }
 }

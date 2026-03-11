@@ -203,9 +203,10 @@
       "settings": {
         "collection_list": [
           "womens",
+          "beauty-and-wellness",
           "mens",
-          "home-goods",
-          "accessories"
+          "accessories",
+          "home-goods"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
@@ -540,26 +541,15 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "amber-interiors",
-          "cleobella",
-          "johnnie-o",
-          "l-space",
-          "le-bon-shoppe",
-          "marine-layer",
-          "michael-stars",
-          "nili-lotan",
-          "outerknown",
           "paige",
-          "ripley-raider",
-          "saint-croix-collections",
-          "saint-croix-gives-back",
-          "sammy-nat",
-          "spectrum-academy-t-shirt-design-contest",
           "t3",
-          "the-cancer-cartel-shop",
-          "the-goa-gift-shop",
-          "vitamin-a",
-          "white-and-warren"
+          "nili-lotan",
+          "le-bon-shoppe",
+          "ripley-raider",
+          "spongelle",
+          "mens-accessories",
+          "white-and-warren",
+          "goldfaden-md"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
